@@ -45,6 +45,10 @@ defmodule Elephant do
       def mock(name, arity) do
         Elephant.mock(name, arity)
       end
+
+      def verify(name, matcher) do
+        Elephant.verify(name, matcher)
+      end
     end
   end
 end

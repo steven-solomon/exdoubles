@@ -6,7 +6,7 @@ defmodule ElephantTest do
     {:ok, _} = mock(:zero_arg_name, 0)
 
     assert_raise RuntimeError, "expected 1 times but was 0", fn ->
-      Elephant.verify(:zero_arg_name, Elephant.once())
+      verify(:zero_arg_name, Elephant.once())
     end
 
     assert_process_stopped()
@@ -18,7 +18,7 @@ defmodule ElephantTest do
 
       zero_arg_fn.()
 
-      assert Elephant.verify(:zero_arg_name, Elephant.once())
+      assert verify(:zero_arg_name, Elephant.once())
     end
 
     test "returns truthy when one arg function is called" do
@@ -26,7 +26,7 @@ defmodule ElephantTest do
 
       one_arg_fn.("hello")
 
-      assert Elephant.verify(:one_arg_name, Elephant.once())
+      assert verify(:one_arg_name, Elephant.once())
     end
 
     test "returns truthy when two arg function is called" do
@@ -34,7 +34,7 @@ defmodule ElephantTest do
 
       two_arg_fn.("hello", "world")
 
-      assert Elephant.verify(:two_arg_name, Elephant.once())
+      assert verify(:two_arg_name, Elephant.once())
     end
 
     test "returns truthy when three arg function is called" do
@@ -42,7 +42,7 @@ defmodule ElephantTest do
 
       three_arg_fn.("hello", "world", "people")
 
-      assert Elephant.verify(:three_arg_name, Elephant.once())
+      assert verify(:three_arg_name, Elephant.once())
     end
 
     test "returns truthy when four arg function is called" do
@@ -50,7 +50,7 @@ defmodule ElephantTest do
 
       four_arg_fn.("hello", "world", "people", "hello")
 
-      assert Elephant.verify(:four_arg_name, Elephant.once())
+      assert verify(:four_arg_name, Elephant.once())
     end
 
     test "returns truthy when five arg function is called" do
@@ -58,7 +58,7 @@ defmodule ElephantTest do
 
       five_arg_fn.("hello", "world", "people", "hello", "world")
 
-      assert Elephant.verify(:five_arg_name, Elephant.once())
+      assert verify(:five_arg_name, Elephant.once())
     end
 
     test "returns truthy when six arg function is called" do
@@ -66,7 +66,7 @@ defmodule ElephantTest do
 
       five_arg_fn.("hello", "world", "people", "hello", "world", "people")
 
-      assert Elephant.verify(:six_arg_name, Elephant.once())
+      assert verify(:six_arg_name, Elephant.once())
     end
 
     test "raises error when > 6 arg function passed to mock" do
@@ -85,8 +85,8 @@ defmodule ElephantTest do
     one_fn.()
     another_fn.()
 
-    Elephant.verify(:one, Elephant.once())
-    Elephant.verify(:another, Elephant.once())
+    verify(:one, Elephant.once())
+    verify(:another, Elephant.once())
   end
 
   test "call count matchers" do
@@ -94,13 +94,13 @@ defmodule ElephantTest do
     zero_arg_fn.()
     zero_arg_fn.()
 
-    Elephant.verify(:zero_arg, Elephant.twice())
+    verify(:zero_arg, Elephant.twice())
 
     zero_arg_fn.()
-    Elephant.verify(:zero_arg, Elephant.thrice())
+    verify(:zero_arg, Elephant.thrice())
 
     zero_arg_fn.()
-    Elephant.verify(:zero_arg, Elephant.times(4))
+    verify(:zero_arg, Elephant.times(4))
   end
 
   describe "process book keeping" do
