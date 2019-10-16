@@ -69,6 +69,8 @@ defmodule ElephantTest do
     assert_raise RuntimeError, "Arity greater than 6 is not supported.", fn ->
       Elephant.mock(7)
     end
+
+    assert is_nil(Enum.find_index(Process.registered(), fn name -> name == Elephant.State end))
   end
 
   describe "process book keeping" do

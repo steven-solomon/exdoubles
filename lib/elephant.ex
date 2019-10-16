@@ -2,11 +2,13 @@ defmodule Elephant do
   alias Elephant.State
 
   def mock(arg_count) do
+    listener_fn = ListenerFactory.make_listener(arg_count, fn ->
+      State.increment()
+    end)
+
     {:ok, _pid} = State.start_link()
 
-    {:ok, ListenerFactory.make_listener(arg_count, fn ->
-      State.increment()
-    end)}
+    {:ok, listener_fn}
   end
 
   def once() do
