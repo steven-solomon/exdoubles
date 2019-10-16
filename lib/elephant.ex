@@ -11,10 +11,6 @@ defmodule Elephant do
     {:ok, listener_fn}
   end
 
-  def twice() do
-    %{times: 2}
-  end
-
   def thrice() do
     %{times: 3}
   end
@@ -48,6 +44,10 @@ defmodule Elephant do
 
       def once() do
         %{times: 1}
+      end
+
+      def twice() do
+        %{times: 2}
       end
     end
   end

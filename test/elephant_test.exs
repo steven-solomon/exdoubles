@@ -94,7 +94,7 @@ defmodule ElephantTest do
     zero_arg_fn.()
     zero_arg_fn.()
 
-    verify(:zero_arg, Elephant.twice())
+    verify(:zero_arg, twice())
 
     zero_arg_fn.()
     verify(:zero_arg, Elephant.thrice())
