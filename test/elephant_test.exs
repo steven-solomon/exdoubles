@@ -16,4 +16,20 @@ defmodule ElephantTest do
 
     assert Elephant.verify(pid, Elephant.once())
   end
+
+  test "returns truthy when one arg function is called" do
+    {:ok, {pid, one_arg_fn}} = Elephant.mock(1)
+
+    one_arg_fn.("hello")
+
+    assert Elephant.verify(pid, Elephant.once())
+  end
+
+  test "returns truthy when two arg function is called" do
+    {:ok, {pid, two_arg_fn}} = Elephant.mock(2)
+
+    two_arg_fn.("hello", "world")
+
+    assert Elephant.verify(pid, Elephant.once())
+  end
 end

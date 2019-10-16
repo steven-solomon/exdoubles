@@ -1,12 +1,8 @@
 defmodule Elephant do
-  def mock(_arg_count) do
+  def mock(arg_count) do
     pid = spawn_link(&wait/0)
 
-    {:ok, {pid, fn -> listen(pid) end}}
-  end
-
-  defp listen(pid) do
-    send(pid, :call)
+    {:ok, {pid, ListenerFactory.make_listener(pid, arg_count)}}
   end
 
   defp wait(count \\ 0)
