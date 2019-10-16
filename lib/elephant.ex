@@ -11,10 +11,6 @@ defmodule Elephant do
     {:ok, listener_fn}
   end
 
-  def times(n) do
-    %{times: n}
-  end
-
   def verify(name, %{times: n}) do
     count = State.call_count(name)
 
@@ -48,6 +44,10 @@ defmodule Elephant do
 
       def thrice() do
         %{times: 3}
+      end
+
+      def times(n) do
+        %{times: n}
       end
     end
   end

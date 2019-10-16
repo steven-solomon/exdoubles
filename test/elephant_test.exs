@@ -100,7 +100,7 @@ defmodule ElephantTest do
     verify(:zero_arg, thrice())
 
     zero_arg_fn.()
-    verify(:zero_arg, Elephant.times(4))
+    verify(:zero_arg, times(4))
   end
 
   describe "process book keeping" do
