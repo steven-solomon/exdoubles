@@ -1,7 +1,7 @@
 defmodule Elephant do
   alias Elephant.State
 
-  def mock(arg_count) do
+  def mock(_name, arg_count) do
     listener_fn = ListenerFactory.make_listener(arg_count, fn ->
       State.increment()
     end)
@@ -15,7 +15,7 @@ defmodule Elephant do
     %{times: 1}
   end
 
-  def verify(%{times: n}) do
+  def verify(_name, %{times: n}) do
     count = call_count()
 
     case call_count() == n do
