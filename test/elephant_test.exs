@@ -77,6 +77,17 @@ defmodule ElephantTest do
     end
   end
 
+  test "tracks multiple mocks" do
+    {:ok, one_fn} = Elephant.mock(:one, 0)
+    {:ok, another_fn} = Elephant.mock(:another, 0)
+
+    one_fn.()
+    another_fn.()
+
+    Elephant.verify(:one, Elephant.once())
+    Elephant.verify(:another, Elephant.once())
+  end
+
   describe "process book keeping" do
     test "there is a process registered " do
       _ = Elephant.mock(:name, 0)
