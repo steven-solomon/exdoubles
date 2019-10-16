@@ -13,13 +13,17 @@ defmodule Elephant.State do
     GenServer.call(__MODULE__, {:call_count, name})
   end
 
-  def increment(name) do
-    GenServer.cast(__MODULE__, {:increment, name})
+  def increment(name, args) do
+    GenServer.cast(__MODULE__, {:increment, name, args})
   end
 
-  def add_mock(name) do
+  def add_mock(%{name: _, arity: _} = mock) do
     start_process()
-    GenServer.cast(__MODULE__, {:add_mock, name})
+    GenServer.cast(__MODULE__, {:add_mock, mock})
+  end
+
+  def get_mock(name) do
+    GenServer.call(__MODULE__, {:get_mock, name})
   end
 
   def stop() do
@@ -27,17 +31,29 @@ defmodule Elephant.State do
   end
 
   def handle_call({:call_count, name}, _from, state) do
-    call_count = Map.get(state, name)
+    %{calls: calls} = Map.get(state, name)
+
+    call_count =
+      calls
+      |> Enum.count()
+
     {:reply, call_count, state}
   end
 
-  def handle_cast({:increment, name}, state) do
-    new_state = Map.update!(state, name, fn value -> value + 1 end)
+  def handle_call({:get_mock, name}, _from, state) do
+    mock = Map.get(state, name)
+    {:reply, Map.put(mock, :name, name), state}
+  end
+
+  def handle_cast({:increment, name, args}, state) do
+    new_state = Map.update!(state, name, fn %{calls: calls} = mock ->
+      %{mock | calls: [args | calls]}
+    end)
     {:noreply, new_state}
   end
 
-  def handle_cast({:add_mock, name}, state) do
-    {:noreply, Map.put(state, name, 0)}
+  def handle_cast({:add_mock, %{name: name, arity: arity}}, state) do
+    {:noreply, Map.put(state, name, %{arity: arity, calls: []})}
   end
 
   defp start_process() do

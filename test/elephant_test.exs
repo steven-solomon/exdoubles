@@ -89,18 +89,44 @@ defmodule ElephantTest do
     verify(:another, once())
   end
 
-  test "call count matchers" do
-    {:ok, zero_arg_fn} = mock(:zero_arg, 0)
-    zero_arg_fn.()
-    zero_arg_fn.()
+  describe "matchers" do
+    test "call count matchers" do
+      {:ok, zero_arg_fn} = mock(:zero_arg, 0)
+      zero_arg_fn.()
+      zero_arg_fn.()
 
-    verify(:zero_arg, twice())
+      verify(:zero_arg, twice())
 
-    zero_arg_fn.()
-    verify(:zero_arg, thrice())
+      zero_arg_fn.()
+      verify(:zero_arg, thrice())
 
-    zero_arg_fn.()
-    verify(:zero_arg, times(4))
+      zero_arg_fn.()
+      verify(:zero_arg, times(4))
+    end
+
+    test "called_with matcher throws error when used with zero arg mock" do
+      {:ok, _} = mock(:zero_arg, 0)
+
+      assert_raise RuntimeError, "called_with cannot have more arguments than the mocked function.", fn ->
+        verify(:zero_arg, called_with(:foo))
+      end
+    end
+
+    test "called_with raises an error when function is never invoked" do
+      {:ok, _} = mock(:one_arg, 1)
+
+      assert_raise RuntimeError, ":one_arg was never called with [:foo]", fn ->
+        verify(:one_arg, called_with([:foo]))
+      end
+    end
+
+    test "called_with matches one arg function" do
+      {:ok, one_arg_fn} = mock(:one_arg, 1)
+
+      one_arg_fn.(:foo)
+
+      verify(:one_arg, called_with([:foo]))
+    end
   end
 
   describe "process book keeping" do
