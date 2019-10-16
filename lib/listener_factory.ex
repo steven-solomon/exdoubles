@@ -18,7 +18,7 @@ defmodule ListenerFactory do
   end
 
   def make_listener(4, listener_fn) do
-    fn _, _, _, _ -> listener_fn.([]) end
+    fn a, b, c, d -> listener_fn.([a, b, c, d]) end
   end
 
   def make_listener(5, listener_fn) do
