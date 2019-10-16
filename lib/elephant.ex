@@ -15,6 +15,18 @@ defmodule Elephant do
     %{times: 1}
   end
 
+  def twice() do
+    %{times: 2}
+  end
+
+  def thrice() do
+    %{times: 3}
+  end
+
+  def times(n) do
+    %{times: n}
+  end
+
   def verify(name, %{times: n}) do
     count = State.call_count(name)
 

@@ -88,6 +88,20 @@ defmodule ElephantTest do
     Elephant.verify(:another, Elephant.once())
   end
 
+  test "call count matchers" do
+    {:ok, zero_arg_fn} = Elephant.mock(:zero_arg, 0)
+    zero_arg_fn.()
+    zero_arg_fn.()
+
+    Elephant.verify(:zero_arg, Elephant.twice())
+
+    zero_arg_fn.()
+    Elephant.verify(:zero_arg, Elephant.thrice())
+
+    zero_arg_fn.()
+    Elephant.verify(:zero_arg, Elephant.times(4))
+  end
+
   describe "process book keeping" do
     test "there is a process registered " do
       _ = Elephant.mock(:name, 0)
