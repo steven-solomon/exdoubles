@@ -89,6 +89,12 @@ defmodule ElephantTest do
     verify(:another, once())
   end
 
+  test "mock returns optional stub" do
+    {:ok, zero_arg_fn} = mock(:zero_arg, 0, :return_value)
+
+    assert :return_value == zero_arg_fn.()
+  end
+
   describe "matchers" do
     test "call count matchers" do
       {:ok, zero_arg_fn} = mock(:zero_arg, 0)

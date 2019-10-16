@@ -1,9 +1,10 @@
 defmodule Elephant do
   alias Elephant.State
 
-  def mock(name, arity) do
+  def mock(name, arity, stub_value) do
     listener_fn = ListenerFactory.make_listener(arity, fn args ->
       State.increment(name, args)
+      stub_value
     end)
 
     :ok = State.add_mock(%{name: name, arity: arity})
@@ -46,8 +47,9 @@ defmodule Elephant do
 
   defmacro __using__(_options) do
     quote do
-      def mock(name, arity) do
-        Elephant.mock(name, arity)
+      def mock(name, arity, stub_value \\ nil)
+      def mock(name, arity, stub_value) do
+        Elephant.mock(name, arity, stub_value)
       end
 
       def verify(name, matcher) do
