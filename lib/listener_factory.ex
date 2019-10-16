@@ -22,11 +22,11 @@ defmodule ListenerFactory do
   end
 
   def make_listener(5, listener_fn) do
-    fn _, _, _, _, _ -> listener_fn.([]) end
+    fn a, b, c, d, e -> listener_fn.([a, b, c, d, e]) end
   end
 
   def make_listener(6, listener_fn) do
-    fn _, _, _, _, _, _ -> listener_fn.([]) end
+    fn a, b, c, d, e, f -> listener_fn.([a, b, c, d, e, f]) end
   end
 
   def make_listener(_, _) do

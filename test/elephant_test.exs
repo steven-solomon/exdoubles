@@ -169,6 +169,22 @@ defmodule ElephantTest do
 
       verify(:four_arg, called_with(["hello", "world", "people", "hello"]))
     end
+
+    test "called_with matches five arg function" do
+      {:ok, five_arg_fn} = mock(:five_arg, 5)
+
+      five_arg_fn.("hello", "world", "people", "hello", "world")
+
+      verify(:five_arg, called_with(["hello", "world", "people", "hello", "world"]))
+    end
+
+    test "called_with matches six arg function" do
+      {:ok, six_arg_fn} = mock(:six_arg, 6)
+
+      six_arg_fn.("hello", "world", "people", "hello", "world", "people")
+
+      verify(:six_arg, called_with(["hello", "world", "people", "hello", "world", "people"]))
+    end
   end
 
   describe "process book keeping" do
