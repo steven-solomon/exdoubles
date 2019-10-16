@@ -11,10 +11,6 @@ defmodule Elephant do
     {:ok, listener_fn}
   end
 
-  def once() do
-    %{times: 1}
-  end
-
   def twice() do
     %{times: 2}
   end
@@ -48,6 +44,10 @@ defmodule Elephant do
 
       def verify(name, matcher) do
         Elephant.verify(name, matcher)
+      end
+
+      def once() do
+        %{times: 1}
       end
     end
   end
