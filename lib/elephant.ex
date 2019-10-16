@@ -6,10 +6,12 @@ defmodule Elephant do
   end
 
   defp wait(count \\ 0)
+
   defp wait(count) do
     receive do
       :call ->
         wait(count + 1)
+
       {:count, pid} ->
         send(pid, {:count, count})
         wait(count)
@@ -22,9 +24,11 @@ defmodule Elephant do
 
   def verify(pid, %{times: n}) do
     count = call_count(pid)
+
     case call_count(pid) == n do
       true ->
         true
+
       false ->
         raise "expected #{n} times but was #{count}"
     end
@@ -32,6 +36,7 @@ defmodule Elephant do
 
   defp call_count(pid) do
     send(pid, {:count, self()})
+
     receive do
       {:count, count} -> count
     end
