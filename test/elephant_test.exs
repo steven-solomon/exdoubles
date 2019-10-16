@@ -32,4 +32,12 @@ defmodule ElephantTest do
 
     assert Elephant.verify(pid, Elephant.once())
   end
+
+  test "returns truthy when three arg function is called" do
+    {:ok, {pid, three_arg_fn}} = Elephant.mock(3)
+
+    three_arg_fn.("hello", "world", "people")
+
+    assert Elephant.verify(pid, Elephant.once())
+  end
 end
