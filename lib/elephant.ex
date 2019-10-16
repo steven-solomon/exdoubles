@@ -1,31 +1,20 @@
 defmodule Elephant do
   def mock(arg_count) do
-    pid = spawn_link(&wait/0)
+    {:ok, _pid} = State.start_link()
 
-    {:ok, {pid, ListenerFactory.make_listener(pid, arg_count)}}
-  end
-
-  defp wait(count \\ 0)
-
-  defp wait(count) do
-    receive do
-      :call ->
-        wait(count + 1)
-
-      {:count, pid} ->
-        send(pid, {:count, count})
-        wait(count)
-    end
+    {:ok, ListenerFactory.make_listener(arg_count, fn ->
+      State.increment()
+    end)}
   end
 
   def once() do
     %{times: 1}
   end
 
-  def verify(pid, %{times: n}) do
-    count = call_count(pid)
+  def verify(%{times: n}) do
+    count = call_count()
 
-    case call_count(pid) == n do
+    case call_count() == n do
       true ->
         true
 
@@ -34,11 +23,7 @@ defmodule Elephant do
     end
   end
 
-  defp call_count(pid) do
-    send(pid, {:count, self()})
-
-    receive do
-      {:count, count} -> count
-    end
+  defp call_count() do
+    State.call_count()
   end
 end
