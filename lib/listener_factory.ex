@@ -23,6 +23,10 @@ defmodule ListenerFactory do
     fn _, _, _, _, _ -> listen(pid) end
   end
 
+  def make_listener(pid, 6) do
+    fn _, _, _, _, _, _ -> listen(pid) end
+  end
+
   def listen(pid) do
     send(pid, :call)
   end
