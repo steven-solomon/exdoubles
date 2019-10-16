@@ -12,7 +12,7 @@ defmodule Elephant do
   end
 
   def verify(name, %{called_with: args}) do
-    %{name: _name, arity: arity, calls: calls} = State.get_mock(name)
+    %{arity: arity, calls: calls} = State.get_mock(name)
     case arity do
       0 -> raise "called_with cannot have more arguments than the mocked function."
       _ ->
@@ -20,7 +20,7 @@ defmodule Elephant do
           true ->
             true
           false ->
-            raise "#{inspect name} was never called with #{inspect args}"
+            raise error(name, args, calls)
         end
     end
   end
@@ -36,6 +36,23 @@ defmodule Elephant do
         State.stop()
         raise "expected #{n} times but was #{call_count}"
     end
+  end
+
+  defp error(name, args, []) do
+    "#{inspect name} was never called with #{inspect args}"
+  end
+  defp error(name, args, calls) do
+    """
+    #{inspect name} was never called with #{inspect args}
+    but was called with:
+    #{format_calls(calls)}
+    """
+  end
+
+  defp format_calls(calls) do
+    calls
+    |> Enum.map(fn call -> "#{inspect call}" end)
+    |> Enum.join("\n")
   end
 
   defp matches?(calls, args) do

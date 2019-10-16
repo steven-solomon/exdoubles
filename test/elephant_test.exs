@@ -120,6 +120,24 @@ defmodule ElephantTest do
       end
     end
 
+    test "called_with gives more detail when argument does not match" do
+      {:ok, one_arg_fn} = mock(:one_arg, 1)
+
+      one_arg_fn.(:bar)
+      one_arg_fn.(:baz)
+
+      message = """
+      :one_arg was never called with [:foo]
+      but was called with:
+      [:baz]
+      [:bar]
+      """
+
+      assert_raise RuntimeError, message, fn ->
+        verify(:one_arg, called_with([:foo]))
+      end
+    end
+
     test "called_with matches one arg function" do
       {:ok, one_arg_fn} = mock(:one_arg, 1)
 
