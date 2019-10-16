@@ -27,6 +27,10 @@ defmodule ListenerFactory do
     fn _, _, _, _, _, _ -> listen(pid) end
   end
 
+  def make_listener(_, _) do
+    raise "Arity greater than 6 is not supported."
+  end
+
   def listen(pid) do
     send(pid, :call)
   end

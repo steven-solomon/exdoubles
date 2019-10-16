@@ -64,4 +64,10 @@ defmodule ElephantTest do
 
     assert Elephant.verify(pid, Elephant.once())
   end
+
+  test "raises error when > 6 arg function passed to mock" do
+    assert_raise RuntimeError, "Arity greater than 6 is not supported.", fn ->
+      Elephant.mock(7)
+    end
+  end
 end
