@@ -1,4 +1,6 @@
 defmodule Elephant do
+  alias Elephant.State
+
   def mock(arg_count) do
     {:ok, _pid} = State.start_link()
 

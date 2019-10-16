@@ -1,4 +1,4 @@
-defmodule State do
+defmodule Elephant.State do
   use GenServer
 
   def start_link() do

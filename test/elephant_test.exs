@@ -70,4 +70,12 @@ defmodule ElephantTest do
       Elephant.mock(7)
     end
   end
+
+  describe "process book keeping" do
+    test "there is a process registered " do
+      _ = Elephant.mock(0)
+
+      assert is_integer(Enum.find_index(Process.registered(), fn name -> name == Elephant.State end))
+    end
+  end
 end
