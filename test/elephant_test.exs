@@ -153,6 +153,14 @@ defmodule ElephantTest do
 
       verify(:two_arg, called_with(["hello", "world"]))
     end
+
+    test "called_with matches three arg function" do
+      {:ok, three_arg_fn} = mock(:three_arg, 3)
+
+      three_arg_fn.("hello", "world", "people")
+
+      verify(:three_arg, called_with(["hello", "world", "people"]))
+    end
   end
 
   describe "process book keeping" do
