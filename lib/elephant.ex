@@ -39,4 +39,12 @@ defmodule Elephant do
         raise "expected #{n} times but was #{count}"
     end
   end
+
+  defmacro __using__(_options) do
+    quote do
+      def mock(name, arity) do
+        Elephant.mock(name, arity)
+      end
+    end
+  end
 end
