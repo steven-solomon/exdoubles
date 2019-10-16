@@ -7,6 +7,8 @@ defmodule ElephantTest do
     assert_raise RuntimeError, "expected 1 times but was 0", fn ->
       Elephant.verify(Elephant.once())
     end
+
+    assert_process_stopped()
   end
 
   test "returns truthy when zero arg function is called" do
@@ -70,7 +72,7 @@ defmodule ElephantTest do
       Elephant.mock(7)
     end
 
-    assert is_nil(Enum.find_index(Process.registered(), fn name -> name == Elephant.State end))
+    assert_process_stopped()
   end
 
   describe "process book keeping" do
@@ -78,6 +80,15 @@ defmodule ElephantTest do
       _ = Elephant.mock(0)
 
       assert is_integer(Enum.find_index(Process.registered(), fn name -> name == Elephant.State end))
+      assert_process_running()
     end
+  end
+
+  defp assert_process_stopped() do
+    assert is_nil(Enum.find_index(Process.registered(), fn name -> name == Elephant.State end))
+  end
+
+  defp assert_process_running() do
+    assert is_integer(Enum.find_index(Process.registered(), fn name -> name == Elephant.State end))
   end
 end

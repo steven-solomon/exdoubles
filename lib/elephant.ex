@@ -23,6 +23,7 @@ defmodule Elephant do
         true
 
       false ->
+        State.stop()
         raise "expected #{n} times but was #{count}"
     end
   end

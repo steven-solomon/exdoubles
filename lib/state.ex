@@ -17,6 +17,10 @@ defmodule Elephant.State do
     GenServer.cast(__MODULE__, :increment)
   end
 
+  def stop() do
+    GenServer.stop(__MODULE__, :normal)
+  end
+
   def handle_call(:call_count, _from, %{call_count: call_count} = state) do
     {:reply, call_count, state}
   end
