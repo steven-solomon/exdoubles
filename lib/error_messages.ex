@@ -10,6 +10,10 @@ defmodule ErrorMessages do
     """
   end
 
+  def arity_not_supported do
+    "Arity greater than 6 is not supported."
+  end
+
   def unsupported_call() do
     "called_with cannot have more arguments than the mocked function."
   end

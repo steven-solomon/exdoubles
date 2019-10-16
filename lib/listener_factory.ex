@@ -30,6 +30,6 @@ defmodule ListenerFactory do
   end
 
   def make_listener(_, _) do
-    raise "Arity greater than 6 is not supported."
+    raise ErrorMessages.arity_not_supported()
   end
 end
