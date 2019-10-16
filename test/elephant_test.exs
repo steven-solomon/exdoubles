@@ -107,7 +107,6 @@ defmodule ElephantTest do
     test "there is a process registered " do
       _ = mock(:name, 0)
 
-      assert is_integer(Enum.find_index(Process.registered(), fn name -> name == Elephant.State end))
       assert_process_running()
     end
   end
