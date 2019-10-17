@@ -10,7 +10,7 @@ by adding `elephant` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:elephant, "~> 0.1.0"}
+    {:elephant, git: "https://github.com/steven-solomon/elephant", only: [:test]}
   ]
 end
 ```
