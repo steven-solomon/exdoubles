@@ -1,6 +1,6 @@
 defmodule ElephantTest do
   use ExUnit.Case
-  use Elephant
+  import Elephant
 
   test "raises error when zero arg function is NEVER called" do
     {:ok, _} = mock(:zero_arg_name, 0)

@@ -1,6 +1,10 @@
 defmodule Elephant do
   alias Elephant.State
 
+  @spec mock(atom, integer) :: {:ok, function}
+  def mock(name, arity, stub_value \\ nil)
+
+  @spec mock(atom, integer, any) :: {:ok, function}
   def mock(name, arity, stub_value) do
     listener_fn = ListenerFactory.make_listener(arity, fn args ->
       State.increment(name, args)
@@ -12,6 +16,10 @@ defmodule Elephant do
     {:ok, listener_fn}
   end
 
+  @type call_count_matcher :: %{times: integer}
+  @type argument_matcher :: %{called_with: list(any())}
+
+  @spec verify(atom(), call_count_matcher) :: bool
   def verify(name, %{called_with: args}) do
     %{arity: arity, calls: calls} = State.get_mock(name)
     case arity do
@@ -26,6 +34,7 @@ defmodule Elephant do
     end
   end
 
+  @spec verify(atom(), argument_matcher) :: bool
   def verify(name, %{times: n}) do
     call_count = State.call_count(name)
 
@@ -45,36 +54,28 @@ defmodule Elephant do
     |> is_integer()
   end
 
-  defmacro __using__(_options) do
-    quote do
-      def mock(name, arity, stub_value \\ nil)
-      def mock(name, arity, stub_value) do
-        Elephant.mock(name, arity, stub_value)
-      end
+  @spec once :: call_count_matcher
+  def once() do
+    %{times: 1}
+  end
 
-      def verify(name, matcher) do
-        Elephant.verify(name, matcher)
-      end
+  @spec twice :: call_count_matcher
+  def twice() do
+    %{times: 2}
+  end
 
-      def once() do
-        %{times: 1}
-      end
+  @spec thrice :: call_count_matcher
+  def thrice() do
+    %{times: 3}
+  end
 
-      def twice() do
-        %{times: 2}
-      end
+  @spec times(integer) :: call_count_matcher
+  def times(n) do
+    %{times: n}
+  end
 
-      def thrice() do
-        %{times: 3}
-      end
-
-      def times(n) do
-        %{times: n}
-      end
-
-      def called_with(args) do
-        %{called_with: args}
-      end
-    end
+  @spec called_with(list(any)) :: argument_matcher
+  def called_with(args) do
+    %{called_with: args}
   end
 end
