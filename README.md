@@ -1,4 +1,4 @@
-# Elephant
+# Elephant 🐘
 
 Elephant is an opinionated mocking library for Elixir. It takes the stance that the easiest way to create loose coupling in your codebase is to follow the Dependency Inversion Principle (DIP) described below. 
 
