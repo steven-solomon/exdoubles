@@ -4,6 +4,8 @@ defmodule Elephant.MixProject do
   def project do
     [
       app: :elephant,
+      description: description(),
+      package: package(),
       version: "0.1.0",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
@@ -11,10 +13,31 @@ defmodule Elephant.MixProject do
     ]
   end
 
+  def description do
+    """
+    Elephant is an opinionated mocking library for Elixir. It takes the stance that the easiest way to create loose coupling in your codebase is to follow the Dependency Inversion Principle (DIP).
+
+    This framework allows adhoc mocks so that you can emulate edge cases in your tests.
+    """
+  end
+
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: [:logger]
+    ]
+  end
+
+  def package do
+    [
+      name: "exunit_elephant",
+      # These are the default files included in the package
+      files: ~w(lib priv .formatter.exs mix.exs README* readme* LICENSE*
+                license* CHANGELOG* changelog* src),
+      licenses: ["MIT"],
+      links: %{
+        "GitHub" => "https://github.com/steven-solomon/elephant"
+      }
     ]
   end
 
