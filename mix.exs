@@ -32,8 +32,7 @@ defmodule Elephant.MixProject do
     [
       name: "exunit_elephant",
       # These are the default files included in the package
-      files: ~w(lib priv .formatter.exs mix.exs README* readme* LICENSE*
-                license* CHANGELOG* changelog* src),
+      files: ~w(lib .formatter.exs mix.exs README* LICENSE*),
       licenses: ["MIT"],
       links: %{
         "GitHub" => "https://github.com/steven-solomon/elephant"
