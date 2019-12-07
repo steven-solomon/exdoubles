@@ -1,4 +1,4 @@
-defmodule ErrorMessages do
+defmodule ExDoubles.ErrorMessages do
   def not_called_error(name, args, []) do
     "#{inspect name} was never called with #{inspect args}"
   end

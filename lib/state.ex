@@ -1,4 +1,4 @@
-defmodule Elephant.State do
+defmodule ExDoubles.State do
   use GenServer
 
   def start_link() do

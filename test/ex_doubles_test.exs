@@ -1,6 +1,6 @@
-defmodule ElephantTest do
+defmodule ExDoublesTest do
   use ExUnit.Case
-  import Elephant
+  import ExDoubles
 
   test "raises error when zero arg function is NEVER called" do
     {:ok, _} = mock(:zero_arg_name, 0)
@@ -202,10 +202,10 @@ defmodule ElephantTest do
   end
 
   defp assert_process_stopped() do
-    assert is_nil(Enum.find_index(Process.registered(), fn name -> name == Elephant.State end))
+    assert is_nil(Enum.find_index(Process.registered(), fn name -> name == ExDoubles.State end))
   end
 
   defp assert_process_running() do
-    assert is_integer(Enum.find_index(Process.registered(), fn name -> name == Elephant.State end))
+    assert is_integer(Enum.find_index(Process.registered(), fn name -> name == ExDoubles.State end))
   end
 end

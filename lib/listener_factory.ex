@@ -1,4 +1,6 @@
-defmodule ListenerFactory do
+defmodule ExDoubles.ListenerFactory do
+  alias ExDoubles.ErrorMessages
+
   def make_listener(0, listener_fn) do
     fn -> listener_fn.([]) end
   end

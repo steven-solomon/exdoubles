@@ -1,5 +1,5 @@
-defmodule Elephant do
-  alias Elephant.State
+defmodule ExDoubles do
+  alias ExDoubles.{ErrorMessages, State, ListenerFactory}
 
   @spec mock(atom, integer) :: {:ok, function}
   def mock(name, arity, stub_value \\ nil)

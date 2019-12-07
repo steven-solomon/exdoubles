@@ -1,6 +1,6 @@
-# Elephant
+# ExDoubles
 
-Elephant is an opinionated mocking library for Elixir. It takes the stance that the easiest way to create loose coupling in your codebase is to follow the Dependency Inversion Principle (DIP) described below. 
+ExDoubles is an opinionated mocking library for Elixir. It takes the stance that the easiest way to create loose coupling in your codebase is to follow the Dependency Inversion Principle (DIP) described below. 
 
 ## Why another mock framework?
 
@@ -8,12 +8,12 @@ There are already a few other mock libraries for Elixir. However they either all
 
 Mocking and testing in general are activities that give you feedback on the design of your code. If you mock functions that you don't own, you are learning about how difficult they are to test, but you can't respond to the pain. You are stuck with the design decisions of the framework authors.
 
-Elephant wants you to wrap the code you don't own in a simple well defined interface, a function. Then you can then mock that function and be on your way.
+ExDoubles wants you to wrap the code you don't own in a simple well defined interface, a function. Then you can then mock that function and be on your way.
 
 We also want Elixir to be popular. In order for that to happen, there needs to be a cohesive ecosystem. Tools should feel consistent and easy to learn. No Erlang knowledge should be required!
 
 ## How does it work?
-As consequence of applying the DIP, we can unit test a function by injecting in a mock functions as arguments. This is where Elephant shines!
+As consequence of applying the DIP, we can unit test a function by injecting in a mock functions as arguments. This is where ExDoubles shines!
 
 You can construct a mock for the signature of any function, using the mock macro. It takes a `label` for your function, and the `arity`. The arity argument makes sure your mock has the same number of arguments. Whereas the label is used by the verify macro to check that your function was invoked in the correct way.
 
@@ -49,7 +49,7 @@ end
 
 ## Stubbing 
 
-Elephant can also allow you to return values from your mocks, this is called stubbing. 
+ExDoubles can also allow you to return values from your mocks, this is called stubbing. 
 
 ```
 test "returns stubbed value" do
@@ -61,7 +61,7 @@ end
 
 ## Matchers
 
-Currently Elephant has a few *Call Count* matchers and one *Argument* matcher.
+Currently ExDoubles has a few *Call Count* matchers and one *Argument* matcher.
 
 ### Call Count matchers
 
@@ -133,7 +133,7 @@ defmodule Db.PayRoll do
 end
 ```
 
-With this principle applied to the code, we are ready to start using Elephant to create mocks.
+With this principle applied to the code, we are ready to start using ExDoubles to create mocks.
 
 ## Installation
 
@@ -142,7 +142,7 @@ This project is currently in it's prototype stage, but is available to test out.
 ```elixir
 def deps do
   [
-    {:elephant, git: "https://github.com/steven-solomon/elephant", only: [:test]}
+    {:exdoubles, git: "https://github.com/steven-solomon/elephant", only: [:test]}
   ]
 end
 ```

@@ -3,7 +3,7 @@ defmodule Elephant.MixProject do
 
   def project do
     [
-      app: :elephant,
+      app: :ex_doubles,
       description: description(),
       package: package(),
       version: "0.1.0",
@@ -11,7 +11,7 @@ defmodule Elephant.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       docs: [
-        main: "Elephant",
+        main: "ExDoubles",
         extras: ["README.md"]
       ]
     ]
@@ -19,7 +19,7 @@ defmodule Elephant.MixProject do
 
   def description do
     """
-    Elephant is an opinionated mocking library for Elixir. It takes the stance that the easiest way to create loose coupling in your codebase is to follow the Dependency Inversion Principle (DIP).
+    ExDoubles is an opinionated mocking library for Elixir. It takes the stance that the easiest way to create loose coupling in your codebase is to follow the Dependency Inversion Principle (DIP).
 
     This framework allows adhoc mocks so that you can emulate edge cases in your tests.
     """
@@ -34,7 +34,7 @@ defmodule Elephant.MixProject do
 
   def package do
     [
-      name: "exunit_elephant",
+      name: "exdoubles",
       # These are the default files included in the package
       files: ~w(lib .formatter.exs mix.exs README* LICENSE*),
       licenses: ["MIT"],
