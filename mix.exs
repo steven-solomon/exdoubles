@@ -3,7 +3,7 @@ defmodule Elephant.MixProject do
 
   def project do
     [
-      app: :ex_doubles,
+      app: :exdoubles,
       description: description(),
       package: package(),
       version: "0.1.0",
