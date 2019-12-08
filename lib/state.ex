@@ -17,6 +17,10 @@ defmodule ExDoubles.State do
     GenServer.call(__MODULE__, {:invoke_function, name, args})
   end
 
+  def add_stub(name, stub) do
+    GenServer.cast(__MODULE__, {:add_stub, name, stub})
+  end
+
   def add_mock(%{name: _, arity: _, stub: _} = mock) do
     start_process()
     GenServer.cast(__MODULE__, {:add_mock, mock})
@@ -56,6 +60,14 @@ defmodule ExDoubles.State do
 
   def handle_cast({:add_mock, %{name: name, arity: arity, stub: stub}}, state) do
     {:noreply, Map.put(state, name, %{arity: arity, calls: [], stub: stub})}
+  end
+
+  def handle_cast({:add_stub, name, stub_value}, state) do
+    updated_state = Map.update!(state, name, fn mock ->
+      %{mock | stub: stub_value}
+    end)
+
+    {:noreply, updated_state}
   end
 
   defp start_process() do

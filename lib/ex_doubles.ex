@@ -1,18 +1,21 @@
 defmodule ExDoubles do
   alias ExDoubles.{ErrorMessages, State, ListenerFactory}
 
-  @spec mock(atom, integer) :: {:ok, function}
-  def mock(name, arity, stub_value \\ nil)
+  @default_stub_value nil
 
-  @spec mock(atom, integer, any) :: {:ok, function}
-  def mock(name, arity, stub_value) do
+  @spec mock(atom, integer) :: {:ok, function}
+  def mock(name, arity) do
     listener_fn = ListenerFactory.make_listener(arity, fn args ->
       State.invoke_function(name, args)
     end)
 
-    :ok = State.add_mock(%{name: name, arity: arity, stub: stub_value})
+    :ok = State.add_mock(%{name: name, arity: arity, stub: @default_stub_value})
 
     {:ok, listener_fn}
+  end
+
+  def when_called(name, stub_value) do
+    :ok = State.add_stub(name, stub_value)
   end
 
   @type call_count_matcher :: %{times: integer}

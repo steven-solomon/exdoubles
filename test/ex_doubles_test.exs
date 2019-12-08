@@ -89,8 +89,10 @@ defmodule ExDoublesTest do
     verify(:another, once())
   end
 
-  test "mock returns optional stub" do
-    {:ok, zero_arg_fn} = mock(:zero_arg, 0, :return_value)
+  test "mock returns stubbed value" do
+    {:ok, zero_arg_fn} = mock(:zero_arg, 0)
+
+    when_called(:zero_arg, :return_value)
 
     assert :return_value == zero_arg_fn.()
   end
