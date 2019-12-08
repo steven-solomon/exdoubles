@@ -2,7 +2,7 @@ defmodule LongRunningTest do
   use ExUnit.Case
   import ExDoubles
 
-  test "that this slow test doesn't affect other instances of Elephant" do
+  test "that this slow test doesn't affect other instances of ExDoubles" do
     {:ok, zero_arg_fn} = mock(:zero_arg, 0)
 
     1..4

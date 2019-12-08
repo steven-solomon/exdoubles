@@ -1,4 +1,4 @@
-defmodule Elephant.MixProject do
+defmodule ExDoubles.MixProject do
   use Mix.Project
 
   def project do
@@ -36,7 +36,7 @@ defmodule Elephant.MixProject do
       name: "exdoubles",
       licenses: ["Apache-2.0"],
       links: %{
-        "GitHub" => "https://github.com/steven-solomon/elephant"
+        "GitHub" => "https://github.com/steven-solomon/exdoubles"
       }
     ]
   end
