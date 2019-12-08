@@ -6,9 +6,9 @@ Once your code follows DIP, **it is easy to construct adhoc mocks for any functi
 
 ## Why another mock framework?
 
-There are already a few other mock libraries for Elixir. However they either allow lack the ability to have ad-hoc mocking, or provide Erlang like syntax. 
+There are already a few other mock libraries for Elixir. However they either lack the ability to have ad-hoc mocking, or provide Erlang like syntax. 
 
-ExDoubles wants you to wrap the code you don't own in a simple well defined interface, a function. Then you can then mock that function and be on your way.
+ExDoubles wants you to wrap the code you don't own in a simple well defined interface, a function. Then you can mock that function and be on your way.
 
 We also want Elixir to be popular. In order for that to happen, there needs to be a cohesive ecosystem. Tools should feel consistent and easy to learn. No Erlang knowledge should be required!
 
