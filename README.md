@@ -4,9 +4,7 @@ ExDoubles is an opinionated mocking library for Elixir. It takes the stance that
 
 ## Why another mock framework?
 
-There are already a few other mock libraries for Elixir. However they either allow you to mock code you don't own, or provide Erlang like syntax. 
-
-Mocking and testing in general are activities that give you feedback on the design of your code. If you mock functions that you don't own, you are learning about how difficult they are to test, but you can't respond to the pain. You are stuck with the design decisions of the framework authors.
+There are already a few other mock libraries for Elixir. However they either allow lack the ability to have ad-hoc mocking, or provide Erlang like syntax. 
 
 ExDoubles wants you to wrap the code you don't own in a simple well defined interface, a function. Then you can then mock that function and be on your way.
 
@@ -15,9 +13,9 @@ We also want Elixir to be popular. In order for that to happen, there needs to b
 ## How does it work?
 As consequence of applying the DIP, we can unit test a function by injecting in a mock functions as arguments. This is where ExDoubles shines!
 
-You can construct a mock for the signature of any function, using the mock macro. It takes a `label` for your function, and the `arity`. The arity argument makes sure your mock has the same number of arguments. Whereas the label is used by the verify macro to check that your function was invoked in the correct way.
+You can construct a mock for the signature of any function, using the `mock` function. It takes a `label` for your function, and the `arity`. The arity argument makes sure your mock has the same number of arguments. Whereas the label is used by `verify` to check that your function was invoked in the correct way.
 
-Let's build an example. First, we create a mock for the `save_fn` argument of a function we ware testing. We specify a label and the arity we want it to have.
+Let's build an example. First, we create a mock of the `save_fn` function. We specify a label and the arity we want it to have.
 
 ```elixir
 {:ok, mock_save_fn} = mock(:save_fn_label, 2)
@@ -35,7 +33,7 @@ Lastly we verify that our function was invoked with the correct data.
 assert verify(:save_fn_label, called_with(["some_employee_id", 0]))
 ```
 
-A complete example test is:
+The complete test looks like this: 
 
 ```elixir
 test "employee with no hours receives zero pay" do
@@ -49,9 +47,9 @@ end
 
 ## Stubbing 
 
-ExDoubles can also allow you to return values from your mocks, this is called stubbing. 
+ExDoubles also allows you to return values from your mocks, this is called stubbing. 
 
-```
+```elixir
 test "returns stubbed value" do
   {:ok, no_arg_moc} = mock(:no_arg_label, 0, "stubbed_value")
 
@@ -61,11 +59,11 @@ end
 
 ## Matchers
 
-Currently ExDoubles has a few *Call Count* matchers and one *Argument* matcher.
+Currently ExDoubles has two types of matchers *Call Count* and *Argument*. 
 
 ### Call Count matchers
 
-Call Count matchers do pretty much what you would expect. They are:
+Call Count matchers do pretty much what you would expect, they verify a function has been called some number of times. They are:
 
 ```elixir
 assert verify(:mock_fn, once())
@@ -76,7 +74,7 @@ assert verify(:mock_fn, times(10))
 
 ### Argument matcher
 
-The only argument matcher at this time is `called_with` this function takes a `label` for a mock and the arguments it is expected to have received. It returns *truthy* or *falsey* which should be used with the ExUnit.Case `assert` function.
+The only argument matcher at this time is `called_with`. This matcher takes a list of arguments that you expect a function to be invoked with. **It returns `truthy` or `falsey` which should be used with the ExUnit.Case `assert` function.**
 
 ```elixir
 assert verify(:mock_label, called_with([[], "some_user_id"]))
