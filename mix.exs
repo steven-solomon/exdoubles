@@ -6,7 +6,7 @@ defmodule Elephant.MixProject do
       app: :exdoubles,
       description: description(),
       package: package(),
-      version: "0.1.1",
+      version: "0.1.2",
       elixir: "~> 1.8",
       deps: deps(),
       docs: [
