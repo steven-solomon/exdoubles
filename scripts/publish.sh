@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 
+set -euxo -pipefail
+
 /Users/$(whoami)/.asdf/installs/elixir/1.8.2/.mix/escripts/ex_doc "ExDoubles" "0.1.2" _build/dev/lib/exdoubles/ebin -m "ExDoubles" -u https://github.com/steven-solomon/elephant
+mix hex.publish
