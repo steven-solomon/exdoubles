@@ -89,12 +89,31 @@ defmodule ExDoublesTest do
     verify(:another, once())
   end
 
-  test "mock returns stubbed value" do
-    {:ok, zero_arg_fn} = mock(:zero_arg, 0)
+  describe "stubbing behavior" do
+    test "returns nil from a mock that has NOT been stubbed" do
+      {:ok, zero_arg_fn} = mock(:zero_arg, 0)
 
-    when_called(:zero_arg, :return_value)
+      assert is_nil(zero_arg_fn.())
+    end
 
-    assert :return_value == zero_arg_fn.()
+    test "returns stubbed value from a stubbed mock" do
+      {:ok, zero_arg_fn} = mock(:zero_arg, 0)
+
+      when_called(:zero_arg, :stub_value)
+
+      assert :stub_value == zero_arg_fn.()
+    end
+
+    test "returns stubbed values in the order they were passed" do
+      {:ok, zero_arg_fn} = mock(:zero_arg, 0)
+
+      when_called(:zero_arg, :stub_value_1)
+      when_called(:zero_arg, :stub_value_2)
+
+      assert :stub_value_1 == zero_arg_fn.()
+      assert :stub_value_2 == zero_arg_fn.()
+      assert is_nil(zero_arg_fn.())
+    end
   end
 
   describe "matchers" do

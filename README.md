@@ -47,13 +47,31 @@ end
 
 ## Stubbing 
 
-ExDoubles also allows you to return values from your mocks, this is called stubbing. 
+ExDoubles allows the definition of stubbed values for a mocked function. By invoking the `when_called` function with a `label` and a value you wish to return, a stubbed value will be returned the next time the `mock` is called.
 
 ```elixir
-test "returns stubbed value" do
-  {:ok, no_arg_moc} = mock(:no_arg_label, 0, "stubbed_value")
+test "returns stubbed value from a mock" do
+  {:ok, mock_fn} = mock(:mock_label, 0)
 
-  assert "stubbed_value" == no_arg_moc()
+  when_called(:mock_label, :stub_value)
+
+  assert :stub_value == mock_fn.()
+end
+```
+
+It is possible to defined multiple stub values. These are values are returned by the function in the order defined in the test.
+
+```elixir
+test "returns stubbed values in the order they were passed to `when_called`" do
+  {:ok, mock_fn} = mock(:mock_label, 0)
+
+  when_called(:mock_label, :stub_value_1)
+  when_called(:mock_label, :stub_value_2)
+  when_called(:mock_label, :stub_value_3)
+
+  assert :stub_value_1 == mock_fn.()
+  assert :stub_value_2 == mock_fn.()
+  assert :stub_value_3 == mock_fn.()
 end
 ```
 

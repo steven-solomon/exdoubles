@@ -1,19 +1,45 @@
 defmodule ExDoubles do
   alias ExDoubles.{ErrorMessages, State, ListenerFactory}
 
-  @default_stub_value nil
-
   @spec mock(atom, integer) :: {:ok, function}
   def mock(name, arity) do
     listener_fn = ListenerFactory.make_listener(arity, fn args ->
       State.invoke_function(name, args)
     end)
 
-    :ok = State.add_mock(%{name: name, arity: arity, stub: @default_stub_value})
+    :ok = State.add_mock(%{name: name, arity: arity})
 
     {:ok, listener_fn}
   end
 
+  @doc """
+    Allows the definition of stubbed values for a mocked function.
+
+    ## Example
+    test "returns stubbed value from a mock" do
+      {:ok, mock_fn} = mock(:mock_label, 0)
+
+      when_called(:mock_label, :stub_value)
+
+      assert :stub_value == mock_fn.()
+    end
+
+    It is possible to defined multiple stub values. These are values are returned by the function in the order defined in the test.
+
+    ## Example
+    test "returns stubbed values in the order they were passed to `when_called`" do
+      {:ok, mock_fn} = mock(:mock_label, 0)
+
+      when_called(:mock_label, :stub_value_1)
+      when_called(:mock_label, :stub_value_2)
+      when_called(:mock_label, :stub_value_3)
+
+      assert :stub_value_1 == mock_fn.()
+      assert :stub_value_2 == mock_fn.()
+      assert :stub_value_3 == mock_fn.()
+    end
+  """
+  @spec mock(atom, any) :: :ok
   def when_called(name, stub_value) do
     :ok = State.add_stub(name, stub_value)
   end

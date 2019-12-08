@@ -1,6 +1,8 @@
 defmodule ExDoubles.State do
   use GenServer
 
+  @default_stub_value []
+
   def start_link() do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
@@ -21,9 +23,10 @@ defmodule ExDoubles.State do
     GenServer.cast(__MODULE__, {:add_stub, name, stub})
   end
 
-  def add_mock(%{name: _, arity: _, stub: _} = mock) do
+  def add_mock(%{name: _, arity: _} = mock) do
     start_process()
-    GenServer.cast(__MODULE__, {:add_mock, mock})
+    mock_with_default_stub = Map.put(mock, :stubs, @default_stub_value)
+    GenServer.cast(__MODULE__, {:add_mock, mock_with_default_stub})
   end
 
   def get_mock(name) do
@@ -50,22 +53,40 @@ defmodule ExDoubles.State do
   end
 
   def handle_call({:invoke_function, name, args}, _from, state) do
-    stub = Map.get(state, name) |> Map.get(:stub)
+    stubs = Map.get(state, name) |> Map.get(:stubs)
 
-    new_state = Map.update!(state, name, fn %{calls: calls} = mock ->
-      %{mock | calls: [args | calls]}
-    end)
-    {:reply, stub, new_state}
+    {return_value, rest} = List.pop_at(stubs, 0)
+
+    new_state = Map.update!(
+      state,
+      name,
+      fn %{calls: calls} = mock ->
+        %{mock | calls: [args | calls], stubs: rest}
+      end
+    )
+    {
+      :reply,
+      return_value,
+      new_state
+    }
   end
 
-  def handle_cast({:add_mock, %{name: name, arity: arity, stub: stub}}, state) do
-    {:noreply, Map.put(state, name, %{arity: arity, calls: [], stub: stub})}
+  def handle_cast({:add_mock, %{name: name, arity: arity, stubs: stubs}}, state) do
+    {:noreply, Map.put(state, name, %{arity: arity, calls: [], stubs: stubs})}
   end
 
   def handle_cast({:add_stub, name, stub_value}, state) do
-    updated_state = Map.update!(state, name, fn mock ->
-      %{mock | stub: stub_value}
-    end)
+    mock = Map.get(state, name)
+
+    updated_mock =
+      Map.update!(
+        mock,
+        :stubs,
+        fn stubs ->
+          stubs ++ [stub_value]
+        end
+      )
+    updated_state = Map.put(state, name, updated_mock)
 
     {:noreply, updated_state}
   end
