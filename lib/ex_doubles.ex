@@ -7,11 +7,10 @@ defmodule ExDoubles do
   @spec mock(atom, integer, any) :: {:ok, function}
   def mock(name, arity, stub_value) do
     listener_fn = ListenerFactory.make_listener(arity, fn args ->
-      State.increment(name, args)
-      stub_value
+      State.invoke_function(name, args)
     end)
 
-    :ok = State.add_mock(%{name: name, arity: arity})
+    :ok = State.add_mock(%{name: name, arity: arity, stub: stub_value})
 
     {:ok, listener_fn}
   end
