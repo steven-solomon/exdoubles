@@ -1,6 +1,6 @@
 # ExDoubles
 
-ExDoubles is mocks an opinionated mocking library for Elixir. It takes the stance that the easiest way to create loose coupling in your codebase is to follow the Dependency Inversion Principle (DIP) described below. 
+ExDoubles is mocks an opinionated test doubles library for Elixir. It takes the stance that the easiest way to create loose coupling in your codebase is to follow the Dependency Inversion Principle (DIP) described below. 
 
 Once your code follows DIP, **it is easy to construct adhoc mocks for any function.**
 
@@ -12,7 +12,7 @@ ExDoubles wants you to wrap the code you don't own in a simple well defined inte
 
 We also want Elixir to be popular. In order for that to happen, there needs to be a cohesive ecosystem. Tools should feel consistent and easy to learn. No Erlang knowledge should be required!
 
-## Mocking
+## Mocks
 As consequence of applying the DIP, we can unit test a function by injecting in mock functions as arguments. This is where ExDoubles shines, we are able to construct adhoc mocks that function!
 
 You can construct a mock for the signature of any function, using the `mock` function. It takes a `label` for your function, and the `arity`. The arity argument makes sure your mock has the same number of arguments. Whereas the label is used by `verify` to check that your function was invoked in the correct way.
@@ -47,7 +47,7 @@ test "employee with no hours receives zero pay" do
 end
 ```
 
-## Stubbing 
+## Stubs
 
 ExDoubles allows the definition of stubbed values for a mocked function. By invoking the `when_called` function with a `label` and a value you wish to return, a stubbed value will be returned the next time the `mock` is called.
 
