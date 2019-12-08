@@ -34,8 +34,6 @@ defmodule Elephant.MixProject do
   def package do
     [
       name: "exdoubles",
-      # These are the default files included in the package
-      files: ~w(lib .formatter.exs mix.exs README* LICENSE*),
       licenses: ["Apache-2.0"],
       links: %{
         "GitHub" => "https://github.com/steven-solomon/elephant"
