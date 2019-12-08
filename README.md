@@ -137,12 +137,10 @@ With this principle applied to the code, we are ready to start using ExDoubles t
 
 ## Installation
 
-This project is currently in it's prototype stage, but is available to test out. Once we feel confident in it's stability, we will do a proper Hex release. Until then, **use at your own risk**!
-
 ```elixir
 def deps do
   [
-    {:exdoubles, git: "https://github.com/steven-solomon/elephant", only: [:test]}
+    {:exdoubles, "~> 0.1", only: [:test]}
   ]
 end
 ```
