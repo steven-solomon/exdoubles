@@ -6,7 +6,7 @@ defmodule ExDoubles.MixProject do
       app: :exdoubles,
       description: description(),
       package: package(),
-      version: "0.1.2",
+      version: "0.2.0",
       elixir: "~> 1.8",
       deps: deps(),
       docs: [
