@@ -15,8 +15,7 @@ defmodule ExDoubles do
   @doc """
     Allows the definition of stubbed values for a mocked function.
 
-    ## Example
-
+    ```elixir
     test "returns stubbed value from a mock" do
       {:ok, mock_fn} = mock(:mock_label, 0)
 
@@ -24,11 +23,11 @@ defmodule ExDoubles do
 
       assert :stub_value == mock_fn.()
     end
+    ```
 
-    It is possible to defined multiple stub values. These are values are returned by the function in the order defined in the test.
+    It is possible to define multiple stub values. These are values are returned by the mock in the order they were passed to `when_called`.
 
-    ## Example
-
+    ```elixir
     test "returns stubbed values in the order they were passed to `when_called`" do
       {:ok, mock_fn} = mock(:mock_label, 0)
 
@@ -40,6 +39,7 @@ defmodule ExDoubles do
       assert :stub_value_2 == mock_fn.()
       assert :stub_value_3 == mock_fn.()
     end
+    ```
   """
   @spec mock(atom, any) :: :ok
   def when_called(name, stub_value) do
