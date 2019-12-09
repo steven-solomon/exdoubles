@@ -16,6 +16,7 @@ defmodule ExDoubles do
     Allows the definition of stubbed values for a mocked function.
 
     ## Example
+
     test "returns stubbed value from a mock" do
       {:ok, mock_fn} = mock(:mock_label, 0)
 
@@ -27,6 +28,7 @@ defmodule ExDoubles do
     It is possible to defined multiple stub values. These are values are returned by the function in the order defined in the test.
 
     ## Example
+
     test "returns stubbed values in the order they were passed to `when_called`" do
       {:ok, mock_fn} = mock(:mock_label, 0)
 
