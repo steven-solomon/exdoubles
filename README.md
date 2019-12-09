@@ -1,6 +1,6 @@
 # ExDoubles
 
-ExDoubles is mocks an opinionated test doubles library for Elixir. It takes the stance that the easiest way to create loose coupling in your codebase is to follow the Dependency Inversion Principle (DIP) described below. 
+ExDoubles is an opinionated test doubles library for Elixir. It takes the stance that the easiest way to create loose coupling in your codebase is to follow the Dependency Inversion Principle (DIP) described below. 
 
 Once your code follows DIP, **it is easy to construct adhoc mocks for any function.**
 
