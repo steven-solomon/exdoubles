@@ -158,7 +158,7 @@ With this principle applied to the code, we are ready to start using ExDoubles t
 ```elixir
 def deps do
   [
-    {:exdoubles, "~> 0.1", only: [:test]}
+    {:exdoubles, "~> 0.2", only: [:test]}
   ]
 end
 ```
