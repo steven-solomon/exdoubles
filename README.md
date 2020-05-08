@@ -13,9 +13,9 @@ ExDoubles wants you to wrap the code you don't own in a simple well defined inte
 We also want Elixir to be popular. In order for that to happen, there needs to be a cohesive ecosystem. Tools should feel consistent and easy to learn. No Erlang knowledge should be required!
 
 ## Mocks
-As consequence of applying the DIP, we can unit test a function by injecting in mock functions as arguments. This is where ExDoubles shines, we are able to construct adhoc mocks that function!
+In order to start using ExDoubles in your test you have to start by adding `import ExDoubles` to your test module.
 
-You can construct a mock for the signature of any function, using the `mock` function. It takes a `label` for your function, and the `arity`. The arity argument makes sure your mock has the same number of arguments. Whereas the label is used by `verify` to check that your function was invoked in the correct way.
+Now that you are importing the framework, you can construct a mock for the signature of any function, using the `mock` function. It takes a `label` for your function, and the `arity`. The arity argument makes sure your mock has the same number of arguments. Whereas the label is used by `verify` to check that your function was invoked in the correct way.
 
 Let's build an example. First, we create a mock of the `save_fn` function. We specify a label and the arity we want it to have.
 
